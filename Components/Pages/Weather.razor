@@ -1,4 +1,6 @@
-﻿@page "/weather"
+﻿@page "/misc/weather"
+
+@inject NavState Nav
 
 <h1>Weather</h1>
 
@@ -38,6 +40,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        // NavState (breadcrumbs, etc) is Scoped, so it lives as long as our connection lives.
+        // So when a new page is visited, we need to clear navigation to prevent breadcrumbs from bleed-over, etc.
+        // This also makes the navbar invisible by default.
+        Nav.SetBreadcrumbs(new List<Node>()
+        {
+            new Node {Text = "Home", Link = ""},
+            new Node {Text = "Counter", Link = "misc/counter", Active = true}
+        });
+
         // Simulate asynchronous loading to demonstrate a loading indicator
         await Task.Delay(500);
 

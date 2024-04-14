@@ -1,4 +1,6 @@
-﻿@page "/counter"
+﻿@page "/misc/counter"
+
+@inject NavState Nav
 
 <h1>Counter</h1>
 
@@ -7,6 +9,18 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
+    protected override void OnInitialized()
+    {
+        // NavState (breadcrumbs, etc) is Scoped, so it lives as long as our connection lives.
+        // So when a new page is visited, we need to clear navigation to prevent breadcrumbs from bleed-over, etc.
+        // This also makes the navbar invisible by default.
+        Nav.SetBreadcrumbs(new List<Node>()
+        {
+            new Node {Text = "Home", Link = ""},
+            new Node {Text = "Counter", Link = "misc/counter", Active = true}
+        });
+    }
+
     private int currentCount = 0;
 
     private void IncrementCount()

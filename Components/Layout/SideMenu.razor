@@ -1,0 +1,49 @@
+﻿<Bar @bind-Visible="sidebarVisible" Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
+     Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small">
+    <BarToggler />
+    <BarBrand>
+        <BarItem>
+            <BarLink To="">
+                <BarIcon IconName="customIcon" />
+                C3P1.app
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="">
+                    <BarIcon IconName="IconName.Home" /> Home
+                </BarLink>
+            </BarItem>
+
+            <BarItem>
+                <BarDropdown>
+                    <BarDropdownToggle>
+                        <BarIcon IconName="IconName.Palette" /> Apps
+                    </BarDropdownToggle>
+                    <BarDropdownMenu>
+                        <BarDropdownItem To="apps/apiclient">
+                            <BarIcon IconName="IconName.Apple" /> ApiClient
+                        </BarDropdownItem>
+                        <BarDropdownItem To="misc/counter">
+                            <BarIcon IconName="IconName.Keyboard" /> Counter
+                        </BarDropdownItem>
+                        <BarDropdownItem To="misc/weather">
+                            <BarIcon IconName="IconName.Sun" /> Weather
+                        </BarDropdownItem>
+                        <BarDropdownItem To="misc/demo">
+                            <BarIcon IconName="IconName.PaintRoller" /> Demo
+                        </BarDropdownItem>
+                    </BarDropdownMenu>
+                </BarDropdown>
+            </BarItem>
+        </BarStart>
+    </BarMenu>
+</Bar>
+
+@code
+{
+    private bool sidebarVisible = true;
+    RenderFragment customIcon =@<Image Source="pix/bb-8.svg" Height="Height.Px(40)" Width="Width.Px(40)" Text="C3P1.net" />;
+}

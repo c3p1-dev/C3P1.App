@@ -1,5 +1,29 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@inject NavState Nav
 
-Welcome to your new app.
+<PageTitle>C3P1.Net/Home</PageTitle>
+
+<Div TextAlignment="TextAlignment.Center">
+    <Image Source="pix/bb-8.svg" Width="Width.Px(300)" Margin="Margin.IsAuto" Text="C3P1.Net logo" />
+    <Heading Size="HeadingSize.Is3">Welcome on C3P1.net</Heading>
+    <Paragraph Padding="Padding.Is1.OnX">
+        <Image Source="pix/icons/opensuse.svg" Height="Height.Px(50)" Text="OpenSuse logo" />
+        <Image Source="/pix/icons/csharp.svg" Height="Height.Px(50)" Text="C# logo" />
+        <Image Source="pix/icons/net.svg" Height="Height.Px(50)" Text=".Net logo" />
+        <Image Source="pix/icons/blazor.svg" Height="Height.Px(50)" Text="Blazor logo" />
+    </Paragraph>
+</Div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // NavState (breadcrumbs, etc) is Scoped, so it lives as long as our connection lives.
+        // So when a new page is visited, we need to clear navigation to prevent breadcrumbs from bleed-over, etc.
+        // This also makes the navbar invisible by default.
+        Nav.SetBreadcrumbs(new List<Node>()
+        {
+            new Node {Text = "Home", Link = "", Active = true }
+        });
+    }
+}

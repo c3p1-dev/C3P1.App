@@ -1,0 +1,50 @@
+﻿@inject IJSRuntime JS
+@inject NavigationManager NavigationManager
+@inject NavState Nav
+
+@implements IDisposable
+
+<Bar @bind-Visible="@topbarVisible" Breakpoint="Breakpoint.Desktop" Style="background: darkslateblue;" Shadow="Shadow.Default" ThemeContrast="ThemeContrast.Dark" Padding="Padding.Is2">
+    <BarBrand Margin="Margin.Is1">
+        <BarItem Height="Height.Px(30)">
+            @* TODO : insert NavBreadcrumb here *@
+             <NavBar /> 
+        </BarItem>
+    </BarBrand>
+</Bar>
+
+@code {
+    private bool topbarVisible = true;
+
+    void LocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        // check if we're going to Identity section
+        string target = e.Location.Substring(NavigationManager.BaseUri.Length);
+
+        if (target.StartsWith("Account/") || target.StartsWith("account/"))
+        {
+            // Show a static breadcrumb for all Account section
+            Nav.Reset();
+            Nav.SetBreadcrumbs(new List<Node>()
+            {
+                new Node() {Text = "Home", Link = ""},
+                new Node() {Text = "Identity", Link = "", Active = true}
+            });
+        }
+    }
+
+    void IDisposable.Dispose()
+    {
+        // Unsubscribe from the event when our component is disposed
+        NavigationManager.LocationChanged -= LocationChanged;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Subscribe to the event
+        NavigationManager.LocationChanged += LocationChanged;
+
+        await base.OnInitializedAsync();
+    }
+
+}
